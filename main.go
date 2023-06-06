@@ -10,7 +10,7 @@ import (
 	"github.com/btcsuite/btcd/chaincfg"
 	"github.com/btcsuite/btcutil"
 	"github.com/gin-gonic/gin"
-	"github.com/olivere/elastic"
+	"github.com/olivere/elastic/v7"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 )
