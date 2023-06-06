@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	homedir "github.com/mitchellh/go-homedir"
-	"github.com/olivere/elastic"
+	"github.com/olivere/elastic/v7"
 )
 
 type elasticClientAlias struct {
