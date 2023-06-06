@@ -7,8 +7,9 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/btcsuite/btcd/chaincfg"
-	"github.com/btcsuite/btcutil"
+	"github.com/dogecoinw/doged/btcutil"
+	"github.com/dogecoinw/doged/chaincfg"
+	//"github.com/btcsuite/btcutil"
 	"github.com/gin-gonic/gin"
 	"github.com/olivere/elastic/v7"
 	"github.com/spf13/viper"
