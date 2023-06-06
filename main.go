@@ -41,7 +41,7 @@ func balanceHandler(c *gin.Context) {
 		return
 	}
 	b := new(Balance)
-	if err := json.Unmarshal(*(searchResult.Hits.Hits[0].Source), b); err != nil {
+	if err := json.Unmarshal((searchResult.Hits.Hits[0].Source), b); err != nil {
 		ginResponseException(c, http.StatusBadRequest, errors.New("unmarshal result error"))
 		return
 	}
@@ -82,7 +82,7 @@ func utxosHandle(c *gin.Context) {
 	var utxos []*utxo
 	for _, vout := range searchResult.Hits.Hits {
 		newVout := new(esVout)
-		if err := json.Unmarshal(*vout.Source, newVout); err != nil {
+		if err := json.Unmarshal(vout.Source, newVout); err != nil {
 			ginResponseException(c, http.StatusBadRequest, errors.New(strings.Join([]string{"fail to unmarshal esvout", err.Error()}, " ")))
 			return
 		}
