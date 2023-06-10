@@ -8,8 +8,8 @@ import (
 	"strings"
 
 	"github.com/dogecoinw/doged/btcutil"
+	//btcutil1 "github.com/btcsuite/btcutil"
 	"github.com/dogecoinw/doged/chaincfg"
-	//"github.com/btcsuite/btcutil"
 	"github.com/gin-gonic/gin"
 	"github.com/olivere/elastic/v7"
 	"github.com/spf13/viper"
@@ -30,8 +30,8 @@ func balanceHandler(c *gin.Context) {
 		ginResponseException(c, http.StatusBadRequest, errors.New(strings.Join([]string{"Address format error:", err.Error()}, " ")))
 		return
 	}
-
-	searchResult, err := esClient.Search().Index("balance").Type("balance").Query(elastic.NewTermQuery("address", address)).Do(context.TODO())
+	sugar.Warn("balance handler address :", address)
+	searchResult, err := esClient.Search().Index("balance").Type("balance").Query(elastic.NewTermQuery("address.keyword", address)).Do(context.TODO())
 	if err != nil {
 		ginResponseException(c, http.StatusNotFound, err)
 		return
@@ -73,7 +73,7 @@ func utxosHandle(c *gin.Context) {
 	// {
 	//		"query": {"bool":{"must":{"term":{"addresses":"12cbQLTFMXRnSzktFkuoG3eHoMeFtpTu3S"}},"must_not":{"exists":{"field":"used"}}}}
 	// }'
-	q := elastic.NewBoolQuery().Must(elastic.NewTermQuery("addresses", address)).MustNot(elastic.NewExistsQuery("used"))
+	q := elastic.NewBoolQuery().Must(elastic.NewTermQuery("addresses.keyword", address)).MustNot(elastic.NewExistsQuery("used"))
 	searchResult, err := esClient.Search().Index("vout").Type("vout").Query(q).SortBy(elastic.NewFieldSort("value").Asc()).Do(context.TODO())
 	if err != nil {
 		ginResponseException(c, http.StatusBadRequest, errors.New(strings.Join([]string{"Query utxo error:", err.Error()}, " ")))
